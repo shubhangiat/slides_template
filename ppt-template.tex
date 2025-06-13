@@ -1,0 +1,340 @@
+\documentclass[t, 10pt, hideothersubsections, notes]{beamer}
+% \documentclass[t, 10pt, hideothersubsections, notes, handout]{beamer}
+% \nonstopmode
+
+\usefonttheme{serif} % default family is serif
+
+% \setbeameroption{show notes on second screen=right}
+
+\usepackage{amssymb}
+\usepackage{bm} % for bold math
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{subfig}
+\captionsetup[subfloat]{labelformat=empty}
+
+\usepackage{url}
+\usepackage{times}
+\usepackage{multirow}
+\usepackage[export]{adjustbox}  % Aligning images inside multirow cell
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{multicol}
+\usepackage{manyfoot}
+\usepackage{hanging}
+\usepackage{booktabs, colortbl}
+\usepackage{relsize}  % Hack for sizes in between standard sizes
+\usepackage{array}  % For new column type
+\usepackage[labelfont={scriptsize,sc,sf}, font={scriptsize,sc,sf}, justification=centering]{caption}
+\usepackage{soul} % For underlining
+\usepackage{makecell}
+\usepackage{appendixnumberbeamer}
+\usepackage{hyperref}
+\usepackage{changepage}
+
+\usepackage{tikz}   % For light drawing
+\usetikzlibrary{positioning,calc}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes.symbols}
+
+\definecolor{lorange}{RGB}{255,160,85}
+\definecolor{dorange}{RGB}{230,125,70}
+\definecolor{sblue}{HTML}{4285f4}
+\definecolor{sgreen}{HTML}{6aa84f}
+\definecolor{scarrot}{RGB}{255, 87, 51}
+\definecolor{lightgray}{rgb}{0.88, 0.88, 0.88}
+\definecolor{ForestGreen}{HTML}{009B55}
+
+\urlstyle{rm}
+
+\mode<presentation>
+{
+	\usetheme[progressbar=frametitle, sectionpage=none]{metropolis}
+	%\usecolortheme{dolphin}
+	\usefonttheme{professionalfonts} 
+	\setbeamercovered{invisible}
+	\setbeamertemplate{navigation symbols}{}
+}
+
+\setbeameroption{hide notes} % Only slides
+% \setbeameroption{show only notes} % Only notes
+% \setbeameroption{show notes} % Both
+% \setbeameroption{show notes on second screen=right}
+
+\setbeamertemplate{headline}
+{
+	\hbox{
+	\begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{section in head/foot}
+		\insertsection
+	\end{beamercolorbox}%
+	\hspace{2em}
+	\begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
+        \insertsubsection
+        \end{beamercolorbox}%
+        \hspace{2em}
+        \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
+        \end{beamercolorbox}}%
+    %     \color{mDarkBrown!10}
+    %     \hyperlink{}{}
+    %     \indent
+    %     \hyperlink{}{}
+    %     \indent
+	% 	\hyperlink{venom}{\venom}
+    %     \indent
+    %     \hyperlink{}{}
+	% \end{beamercolorbox}%
+	% \hspace{2em}
+	% \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
+	% \end{beamercolorbox}}%
+}
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+	\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+		\usebeamerfont{author in head/foot} \insertshortauthor
+	\end{beamercolorbox}
+
+	\hspace*{-1mm}
+	\begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+		\usebeamerfont{institute in head/foot} \insertshortinstitute
+	\end{beamercolorbox}
+  
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+    \hfill
+    \insertframenumber{} / \inserttotalframenumber
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+%\setbeamertemplate{caption}[numbered]
+
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} 
+\DeclareNewFootnote{A}[arabic]
+
+\newcommand{\tl}{\langle}
+\newcommand{\tr}{\rangle}
+
+\newcommand{\hyg}{\textsc{HyGraph}\xspace}
+
+\newcommand{\figwidth}{0.9\linewidth}
+\newcommand{\figsmaller}{0.8\textwidth}
+\newcommand{\figsmall}{0.6\textwidth}
+\newcommand{\twofigwidth}{0.45\linewidth}
+\newcommand{\colsep}{0.1\textwidth}
+\newcommand{\onecol}{0.33\textwidth}
+\newcommand{\twocol}{0.66\textwidth}
+\newcommand{\halfframe}{0.5\textwidth}
+\newcommand{\spaceleft}{\hspace*{2.5em}}
+\newcommand{\spacebetn}{\hspace*{4em}}
+\newcommand{\spacefirst}{\hspace*{-5mm}}
+\newcommand{\spacesecond}{\hspace*{-10mm}}
+
+\renewcommand{\hl}[1]{\textcolor{sblue}{#1}}  % highlight
+
+\renewcommand{\indent}{\hspace*{2em}}
+
+\newcounter{customenumi}
+\newcommand{\seti}{\setcounter{customenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{customenumi}}}
+
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\newcolumntype{K}[1]{>{\centering\arraybackslash}p{#1}}
+
+\newcommand{\sa}[1]{\textcolor{teal}{(SA: #1)}}
+
+% Path to folder with images to include
+% \graphicspath{{img/}}
+
+\title[Title in footer]
+{Title}
+
+\author[Author name in footer]
+{      
+    \centering         
+    \normalsize
+    \textsc{Author name}\\
+    \small
+    \textcolor{teal}{\url{author@email.com}}\\[1.5em]
+}
+
+\date[date]
+
+\institute[affiliation in footer]
+{
+    Affiliation
+}
+
+\begin{document}
+
+% ==============================================================================
+%                                   TITLE PAGE
+% ==============================================================================
+
+
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+
+% ==============================================================================
+%                                 INTRODUCTION
+% ==============================================================================
+
+
+\section{Introduction}
+
+% ------------------------------------------------------------------------------
+
+\subsection{Subsec 1}
+
+\begin{frame}{Slide 1}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}{Slide 2$^{[1]}$}
+
+    \footnotetext{\tiny\larger[0.5][1] Image: Google Images}
+
+\end{frame}
+
+% ==============================================================================
+%                             Section 2
+% ==============================================================================
+
+\section{Sec 2}
+
+% ------------------------------------------------------------------------------
+
+\subsection{Subsec 2}
+
+\setbeamercovered{invisible, again covered={\opaqueness<1->{15}}}
+\begin{frame}{Slide 3}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}{Slide 4}
+\end{frame}
+
+% ==============================================================================
+%                               Future Work
+% ==============================================================================
+
+\setbeamercovered{invisible}
+
+\section{Future Work}
+
+\begin{frame}{Road onwards...}
+
+\end{frame}
+
+
+% ==============================================================================
+%                               Thank you
+% ==============================================================================
+
+{
+    \setbeamertemplate{background canvas}{
+        \begin{tikzpicture}[remember picture,overlay]
+            \fill[mDarkTeal] (current page.north west) rectangle (current page.south);
+        \end{tikzpicture}
+
+    \metroset{sectionpage=none}
+    }
+
+    \begin{frame}[plain, c]
+        \Large
+        \vspace{-1em}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+
+                \begin{flushright}
+                    \textbf{\textcolor{white}{Questions?}}
+                \end{flushright}
+
+                % \vspace*{3em}
+
+                % \color{white}
+
+                % \begin{figure}
+                %     \hspace{0.5ex}
+                %     \captionsetup[subfloat]{position=above}
+                %     \subfloat[\bf Paper]
+                %     {
+                %         \includegraphics[width=0.3\linewidth]{venom-pdf-2}
+                %     }
+                %     \hfill
+                %     \subfloat[\bf Code]{
+                %         \includegraphics[width=0.3\linewidth]{venom-github-2}
+                %     }
+                %     \hspace{1em}
+                % \end{figure}
+
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{flushleft}
+                    \textbf{Thank you!}
+                \end{flushleft}
+
+                % \vspace*{3em}
+
+                % \begin{figure}
+                %     \hspace{1ex}
+                %     \captionsetup[subfloat]{position=above}
+                %     \subfloat[\bf Homepage]
+                %     {
+                %         \setlength{\fboxrule}{1pt}
+                %         \includegraphics[width=0.3\linewidth, frame]{shubhangi-home-2}
+                        
+                %     }
+                %     \hfill
+                %     \subfloat[\bf LinkedIn]{
+                %         \setlength{\fboxrule}{1pt}
+                %         \includegraphics[width=0.3\linewidth, frame]{shubhangi-linkedin-2}
+                %     }
+                %     \hspace{0.5em}
+                % \end{figure}
+            \end{column}
+        \end{columns}
+    \end{frame}
+}
+
+% ==============================================================================
+%                               Appendix
+% ==============================================================================
+
+% \appendix
+\backupbegin
+
+\section*{Appendix}
+
+\begin{frame}[noframenumbering, plain]{Appendix 1}
+    Appendix without header and footer
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[noframenumbering]{Appendix 2}
+    
+\end{frame}
+
+% ==============================================================================
+\backupend
+% ==============================================================================
+
+\end{document}
